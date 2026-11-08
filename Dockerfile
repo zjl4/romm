@@ -175,6 +175,17 @@ RUN mkdir /emulators/easyrpg/rtp && \
     tar -xzf /downloads/easyrpg-rtp.tar.gz -C /emulators/easyrpg/rtp --strip-components=1 && \
     find /emulators/easyrpg/rtp \( -name '.git*' -o -name Makefile \) -exec rm -f {} +
 
+# mkxp-z (GPL-2.0+) has no web release yet, so this libretro core comes from a
+# fork that builds and tags one; SOURCES.txt inside names its source commits.
+ARG MKXPZ_VERSION=v0.1.0
+ARG MKXPZ_SHA256=884e1523ec820a865f5fbf53ff951c7f20262f3f11c684c350d931b27ffbf0f0
+
+ADD --checksum=sha256:${MKXPZ_SHA256} \
+    "https://github.com/zjl4/mkxp-z-libretro-emscripten/releases/download/${MKXPZ_VERSION}/mkxp-z-libretro-emscripten-${MKXPZ_VERSION}.tar.gz" \
+    /downloads/mkxpz.tar.gz
+RUN mkdir -p /emulators/mkxpz && \
+    tar -xzf /downloads/mkxpz.tar.gz -C /emulators/mkxpz --strip-components=1
+
 
 FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION}@${PYTHON_ALPINE_DIGEST}
 

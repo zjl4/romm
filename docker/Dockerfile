@@ -186,7 +186,7 @@ RUN case "${TARGETARCH}" in \
     chmod 0755 /rom-converto
 
 
-# FETCH EMULATORJS, RUFFLE, JS-DOS, FAKE-08 AND EASYRPG
+# FETCH EMULATORJS, RUFFLE, JS-DOS, FAKE-08, EASYRPG AND MKXP-Z
 # Keep the pins below in sync with the dev image's copies in ../Dockerfile.
 # checkov:skip=CKV_DOCKER_4:every ADD below is a remote URL pinned by --checksum
 FROM alpine:${ALPINE_VERSION}@${ALPINE_DIGEST} AS emulator-stage
@@ -259,6 +259,17 @@ ADD --checksum=sha256:${EASYRPG_RTP_SHA256} \
 RUN mkdir /easyrpg/rtp && \
     tar -xzf /downloads/easyrpg-rtp.tar.gz -C /easyrpg/rtp --strip-components=1 && \
     find /easyrpg/rtp \( -name '.git*' -o -name Makefile \) -exec rm -f {} +
+
+# mkxp-z (GPL-2.0+) has no web release yet, so this libretro core comes from a
+# fork that builds and tags one; SOURCES.txt inside names its source commits.
+ARG MKXPZ_VERSION=v0.1.0
+ARG MKXPZ_SHA256=884e1523ec820a865f5fbf53ff951c7f20262f3f11c684c350d931b27ffbf0f0
+
+ADD --checksum=sha256:${MKXPZ_SHA256} \
+    "https://github.com/zjl4/mkxp-z-libretro-emscripten/releases/download/${MKXPZ_VERSION}/mkxp-z-libretro-emscripten-${MKXPZ_VERSION}.tar.gz" \
+    /downloads/mkxpz.tar.gz
+RUN mkdir -p /mkxpz && \
+    tar -xzf /downloads/mkxpz.tar.gz -C /mkxpz --strip-components=1
 
 
 # BUILD NGINX MODULE WITH MOD_ZIP
@@ -390,4 +401,5 @@ COPY --from=emulator-stage /ruffle /var/www/html/assets/ruffle
 COPY --from=emulator-stage /jsdos/dist /var/www/html/assets/jsdos
 COPY --from=emulator-stage /fake08 /var/www/html/assets/pico8
 COPY --from=emulator-stage /easyrpg /var/www/html/assets/easyrpg
+COPY --from=emulator-stage /mkxpz /var/www/html/assets/mkxpz
 
