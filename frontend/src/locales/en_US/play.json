@@ -114,6 +114,8 @@
   "memory-card-versions": "Version history",
   "memory-cards": "Memory cards",
   "memory-cards-empty": "You don't have any memory cards for this emulator yet.",
+  "mkxpz-saves-load-failed": "Could not load your saves from RomM.",
+  "mkxpz-screen": "mkxp-z game screen",
   "multiplayer": "Multiplayer mode",
   "multiplayer-hint": "Shows a Join button on this game's page and keeps chat and webcam visible.",
   "mute": "Mute",

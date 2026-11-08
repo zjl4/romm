@@ -114,6 +114,8 @@
   "memory-card-versions": "Versionsverlauf",
   "memory-cards": "Speicherkarten",
   "memory-cards-empty": "Du hast noch keine Speicherkarten für diesen Emulator.",
+  "mkxpz-saves-load-failed": "Die Speicherstände konnten nicht aus RomM geladen werden.",
+  "mkxpz-screen": "mkxp-z-Spielbildschirm",
   "multiplayer": "Mehrspielermodus",
   "multiplayer-hint": "Zeigt auf der Seite dieses Spiels eine Schaltfläche zum Beitreten und hält Chat und Webcam sichtbar.",
   "mute": "Stummschalten",

@@ -114,6 +114,8 @@
   "memory-card-versions": "Historia wersji",
   "memory-cards": "Karty pamięci",
   "memory-cards-empty": "Nie masz jeszcze żadnych kart pamięci dla tego emulatora.",
+  "mkxpz-saves-load-failed": "Nie udało się wczytać zapisów z RomM.",
+  "mkxpz-screen": "Ekran gry mkxp-z",
   "multiplayer": "Tryb wieloosobowy",
   "multiplayer-hint": "Wyświetla przycisk Dołącz na stronie tej gry i utrzymuje widoczny czat oraz kamerę internetową.",
   "mute": "Wycisz",

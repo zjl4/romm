@@ -1976,6 +1976,7 @@ Falls back to `FakeRedis` in test mode.
 | `DISABLE_JSDOS`          | `false` | Hide js-dos player       |
 | `DISABLE_PICO8`          | `false` | Hide PICO-8 player       |
 | `DISABLE_EASYRPG`        | `false` | Hide EasyRPG player      |
+| `DISABLE_MKXPZ`          | `false` | Hide mkxp-z player       |
 
 #### Task Scheduling
 

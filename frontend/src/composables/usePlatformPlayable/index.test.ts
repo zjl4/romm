@@ -13,6 +13,7 @@ const dosboxSlugs = new Set<string>();
 const jsDosSlugs = new Set<string>();
 const pico8Slugs = new Set<string>();
 const easyRpgSlugs = new Set<string>();
+const mkxpzSlugs = new Set<string>();
 const streamContainers = new Map<string, { label: string; emulator: string }>();
 const streamingEnabled = { value: true };
 const canPlayInBrowser = { value: true };
@@ -22,6 +23,7 @@ vi.mock("@/utils", () => ({
   isJsDosEmulationSupported: (slug: string) => jsDosSlugs.has(slug),
   isPico8EmulationSupported: (slug: string) => pico8Slugs.has(slug),
   isEasyRpgEmulationSupported: (slug: string) => easyRpgSlugs.has(slug),
+  isMkxpzEmulationSupported: (slug: string) => mkxpzSlugs.has(slug),
   isRuffleEmulationSupported: (slug: string) => ruffleSlugs.has(slug),
   getSupportedEJSCores: (slug: string) =>
     dosboxSlugs.has(slug) ? ["dosbox_pure"] : ["snes9x"],
@@ -90,6 +92,7 @@ beforeEach(() => {
   jsDosSlugs.clear();
   pico8Slugs.clear();
   easyRpgSlugs.clear();
+  mkxpzSlugs.clear();
   streamContainers.clear();
   streamingEnabled.value = true;
   canPlayInBrowser.value = true;
@@ -115,6 +118,13 @@ describe("usePlatformPlayable", () => {
     const { mode, emulator } = usePlatformPlayable(() => "rpg-maker");
     expect(mode.value).toBe("browser");
     expect(emulator.value).toBe("easyrpg");
+  });
+
+  it("falls back to mkxp-z when EasyRPG is turned off", () => {
+    mkxpzSlugs.add("rpg-maker");
+    const { mode, emulator } = usePlatformPlayable(() => "rpg-maker");
+    expect(mode.value).toBe("browser");
+    expect(emulator.value).toBe("mkxpz");
   });
 
   it("resolves streaming-only as stream and carries the container label", () => {
@@ -227,6 +237,9 @@ describe("playTooltip", () => {
     );
     expect(playTooltip("browser", "easyrpg", null)).toBe(
       "platform.playable-browser-easyrpg",
+    );
+    expect(playTooltip("browser", "mkxpz", null)).toBe(
+      "platform.playable-browser-mkxpz",
     );
     expect(playTooltip("browser", "emulatorjs", null)).toBe(
       "platform.playable-browser-emulatorjs",

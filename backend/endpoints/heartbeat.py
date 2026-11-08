@@ -15,6 +15,7 @@ from config import (
     DISABLE_EMULATOR_JS,
     DISABLE_JSDOS,
     DISABLE_LOGS_VIEWER,
+    DISABLE_MKXPZ,
     DISABLE_PICO8,
     DISABLE_RUFFLE_RS,
     DISABLE_SETUP_WIZARD,
@@ -174,6 +175,7 @@ async def heartbeat() -> HeartbeatResponse:
             "DISABLE_JSDOS": DISABLE_JSDOS,
             "DISABLE_PICO8": DISABLE_PICO8,
             "DISABLE_EASYRPG": DISABLE_EASYRPG,
+            "DISABLE_MKXPZ": DISABLE_MKXPZ,
         },
         "FRONTEND": {
             "DISABLE_USERPASS_LOGIN": DISABLE_USERPASS_LOGIN,

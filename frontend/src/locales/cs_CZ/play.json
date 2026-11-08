@@ -114,6 +114,8 @@
   "memory-card-versions": "Historie verzí",
   "memory-cards": "Paměťové karty",
   "memory-cards-empty": "Pro tento emulátor zatím nemáte žádné paměťové karty.",
+  "mkxpz-saves-load-failed": "Vaše uložené pozice se nepodařilo načíst z RomM.",
+  "mkxpz-screen": "Obrazovka hry mkxp-z",
   "multiplayer": "Režim pro více hráčů",
   "multiplayer-hint": "Na stránce hry se zobrazí tlačítko Připojit se a chat i webkamera zůstanou viditelné.",
   "mute": "Ztlumit",

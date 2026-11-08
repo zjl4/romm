@@ -16,6 +16,7 @@ export const ROUTES = {
   JSDOS: "jsdos",
   PICO8: "pico8",
   EASYRPG: "easyrpg",
+  MKXPZ: "mkxpz",
   RUFFLE: "ruffle",
   STREAM: "stream",
   STREAM_DESKTOP: "stream-desktop",

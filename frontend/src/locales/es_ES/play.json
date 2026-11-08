@@ -114,6 +114,8 @@
   "memory-card-versions": "Historial de versiones",
   "memory-cards": "Tarjetas de memoria",
   "memory-cards-empty": "Todavía no tienes ninguna tarjeta de memoria para este emulador.",
+  "mkxpz-saves-load-failed": "No se pudieron cargar tus partidas desde RomM.",
+  "mkxpz-screen": "Pantalla de juego de mkxp-z",
   "multiplayer": "Modo multijugador",
   "multiplayer-hint": "Muestra un botón Unirse en la página de este juego y mantiene visibles el chat y la cámara web.",
   "mute": "Silenciar",

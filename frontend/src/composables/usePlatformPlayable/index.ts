@@ -32,13 +32,21 @@ import {
   isEasyRpgEmulationSupported,
   isEJSEmulationSupported,
   isJsDosEmulationSupported,
+  isMkxpzEmulationSupported,
   isPico8EmulationSupported,
   isRuffleEmulationSupported,
   resolvePlatformSlug,
 } from "@/utils";
 
 export type PlatformEmulator =
-  "emulatorjs" | "ruffle" | "jsdos" | "pico8" | "easyrpg" | "dosbox" | null;
+  | "emulatorjs"
+  | "ruffle"
+  | "jsdos"
+  | "pico8"
+  | "easyrpg"
+  | "mkxpz"
+  | "dosbox"
+  | null;
 
 export type PlatformPlayMode = "browser" | "stream" | "both" | null;
 
@@ -62,6 +70,7 @@ function resolveEmulator(
   if (isJsDosEmulationSupported(slug, heartbeat, config)) return "jsdos";
   if (isPico8EmulationSupported(slug, heartbeat, config)) return "pico8";
   if (isEasyRpgEmulationSupported(slug, heartbeat, config)) return "easyrpg";
+  if (isMkxpzEmulationSupported(slug, heartbeat, config)) return "mkxpz";
   if (!isEJSEmulationSupported(slug, heartbeat, config)) return null;
   const cores = getSupportedEJSCores(resolvePlatformSlug(slug, config));
   if (cores.includes("dosbox_pure")) return "dosbox";
@@ -181,6 +190,8 @@ export function playTooltip(
           return t("platform.playable-browser-pico8");
         case "easyrpg":
           return t("platform.playable-browser-easyrpg");
+        case "mkxpz":
+          return t("platform.playable-browser-mkxpz");
         case "dosbox":
           return t("platform.playable-browser-dosbox");
         default:

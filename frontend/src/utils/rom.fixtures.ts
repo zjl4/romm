@@ -152,6 +152,7 @@ export function romFixture(overrides: Partial<SimpleRom> = {}): SimpleRom {
     has_nested_single_file: false,
     has_multiple_files: false,
     is_easyrpg_game: false,
+    mkxpz_engine: null,
     full_path: "",
     created_at: WRITTEN_AT,
     updated_at: WRITTEN_AT,

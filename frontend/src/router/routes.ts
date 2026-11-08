@@ -36,6 +36,7 @@ export const routeComponents: Partial<Record<RouteName, RouteViewLoader>> = {
   [ROUTES.JSDOS]: () => import("@/views/Player/JsDos.vue"),
   [ROUTES.PICO8]: () => import("@/views/Player/Pico8.vue"),
   [ROUTES.EASYRPG]: () => import("@/views/Player/EasyRpg.vue"),
+  [ROUTES.MKXPZ]: () => import("@/views/Player/Mkxpz.vue"),
   [ROUTES.RUFFLE]: () => import("@/views/Player/Ruffle.vue"),
   [ROUTES.STREAM]: () => import("@/views/Player/Stream.vue"),
   [ROUTES.STREAM_DESKTOP]: () => import("@/views/Player/Desktop.vue"),

@@ -114,6 +114,8 @@
   "memory-card-versions": "Verzióelőzmények",
   "memory-cards": "Memóriakártyák",
   "memory-cards-empty": "Még nincs memóriakártyád ehhez az emulátorhoz.",
+  "mkxpz-saves-load-failed": "A mentéseket nem sikerült betölteni a RomM-ból.",
+  "mkxpz-screen": "mkxp-z játékképernyő",
   "multiplayer": "Többjátékos mód",
   "multiplayer-hint": "Csatlakozás gombot jelenít meg a játék oldalán, és láthatóan tartja a csevegést és a webkamerát.",
   "mute": "Némítás",

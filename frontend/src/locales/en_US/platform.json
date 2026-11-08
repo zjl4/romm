@@ -72,6 +72,7 @@
   "playable-browser-easyrpg": "Playable in browser through EasyRPG",
   "playable-browser-emulatorjs": "Playable in browser through EmulatorJS",
   "playable-browser-jsdos": "Playable in browser through js-dos",
+  "playable-browser-mkxpz": "Playable in browser through mkxp-z",
   "playable-browser-pico8": "Playable in browser through PICO-8",
   "playable-browser-ruffle": "Playable in browser through Ruffle",
   "playable-none": "Not playable in browser or by streaming",

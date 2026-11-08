@@ -114,6 +114,8 @@
   "memory-card-versions": "バージョン履歴",
   "memory-cards": "メモリーカード",
   "memory-cards-empty": "このエミュレーターのメモリーカードはまだありません。",
+  "mkxpz-saves-load-failed": "RomM からセーブデータをロードできませんでした。",
+  "mkxpz-screen": "mkxp-z のゲーム画面",
   "multiplayer": "マルチプレイヤーモード",
   "multiplayer-hint": "このゲームのページに参加ボタンを表示し、チャットとウェブカメラを表示したままにします。",
   "mute": "ミュート",

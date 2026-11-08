@@ -25,6 +25,7 @@ from sqlalchemy import (
     Text,
     UniqueConstraint,
     and_,
+    case,
     event,
     false,
     func,
@@ -332,6 +333,42 @@ IDENTITY_PROVIDER_ID_LENGTH: Final = 100
 
 # The database file at the root of every RPG Maker 2000/2003 game folder.
 EASYRPG_GAME_DATABASE: Final = "rpg_rt.ldb"
+
+
+class MkxpzEngine(enum.StrEnum):
+    """The RGSS engine an RPG Maker XP/VX/VX Ace game folder targets."""
+
+    XP = "xp"
+    VX = "vx"
+    VX_ACE = "vx-ace"
+
+
+# An encrypted game ships one archive at its root; an unencrypted one its scripts in Data/.
+MKXPZ_ARCHIVE_ENGINES: Final = {
+    ".rgssad": MkxpzEngine.XP,
+    ".rgss2a": MkxpzEngine.VX,
+    ".rgss3a": MkxpzEngine.VX_ACE,
+}
+MKXPZ_SCRIPTS_ENGINES: Final = {
+    "scripts.rxdata": MkxpzEngine.XP,
+    "scripts.rvdata": MkxpzEngine.VX,
+    "scripts.rvdata2": MkxpzEngine.VX_ACE,
+}
+MKXPZ_DATA_FOLDER: Final = "data"
+
+
+def mkxpz_engine_of_file(
+    rom_full_path: str, file_path: str, file_name: str
+) -> MkxpzEngine | None:
+    """The engine a file marks its game folder as, if it is one of the markers."""
+    name = file_name.lower()
+    if file_path == rom_full_path:
+        return next(
+            (e for ext, e in MKXPZ_ARCHIVE_ENGINES.items() if name.endswith(ext)), None
+        )
+    if file_path.lower() == f"{rom_full_path}/{MKXPZ_DATA_FOLDER}".lower():
+        return MKXPZ_SCRIPTS_ENGINES.get(name)
+    return None
 
 
 class RomIdentityKey(BaseModel):
@@ -1236,6 +1273,7 @@ class Rom(BaseModel):
         multi_file: Mapped[bool]
         top_level_file_count: Mapped[int]
         is_easyrpg_game: Mapped[bool]
+        mkxpz_engine: Mapped[str | None]
 
     @property
     def has_simple_single_file(self) -> bool:
@@ -1427,6 +1465,44 @@ Rom.is_easyrpg_game = column_property(
     deferred=True,
 )
 
+# Mirrors `mkxpz_engine_of_file`.
+_file_name_lower = func.lower(RomFile.file_name)
+_mkxpz_engine_case = case(
+    *(
+        (
+            and_(RomFile.file_path == _rom_full_path, _file_name_lower.like(f"%{ext}")),
+            engine.value,
+        )
+        for ext, engine in MKXPZ_ARCHIVE_ENGINES.items()
+    ),
+    *(
+        (
+            and_(
+                func.lower(RomFile.file_path)
+                == func.lower(func.concat(_rom_full_path, f"/{MKXPZ_DATA_FOLDER}")),
+                _file_name_lower == name,
+            ),
+            engine.value,
+        )
+        for name, engine in MKXPZ_SCRIPTS_ENGINES.items()
+    ),
+)
+
+Rom.mkxpz_engine = column_property(
+    select(_mkxpz_engine_case)
+    .where(
+        and_(
+            RomFile.rom_id == Rom.id,
+            RomFile.missing_from_fs.is_(False),
+            _mkxpz_engine_case.is_not(None),
+        )
+    )
+    .correlate_except(RomFile)
+    .limit(1)
+    .scalar_subquery(),
+    deferred=True,
+)
+
 
 def apply_file_stats(rom: Rom, files: Sequence[RomFile]) -> None:
     """Fill the deferred file-stat columns from an already-loaded file list."""
@@ -1455,6 +1531,23 @@ def apply_file_stats(rom: Rom, files: Sequence[RomFile]) -> None:
             and f.file_name.lower() == EASYRPG_GAME_DATABASE
             and not f.missing_from_fs
             for f in files
+        ),
+    )
+    set_committed_value(
+        rom,
+        "mkxpz_engine",
+        next(
+            (
+                engine
+                for f in files
+                if not f.missing_from_fs
+                and (
+                    engine := mkxpz_engine_of_file(
+                        rom.full_path, f.file_path, f.file_name
+                    )
+                )
+            ),
+            None,
         ),
     )
 

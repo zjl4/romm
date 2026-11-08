@@ -8,5 +8,6 @@ export type EmulationDict = {
     DISABLE_JSDOS: boolean;
     DISABLE_PICO8: boolean;
     DISABLE_EASYRPG: boolean;
+    DISABLE_MKXPZ: boolean;
 };
 

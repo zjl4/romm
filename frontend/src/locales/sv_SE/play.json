@@ -114,6 +114,8 @@
   "memory-card-versions": "Versionshistorik",
   "memory-cards": "Minneskort",
   "memory-cards-empty": "Du har ännu inga minneskort för den här emulatorn.",
+  "mkxpz-saves-load-failed": "Kunde inte läsa in dina sparfiler från RomM.",
+  "mkxpz-screen": "mkxp-z-spelskärm",
   "multiplayer": "Flerspelarläge",
   "multiplayer-hint": "Visar en knapp för att ansluta på spelets sida och håller chatt och webbkamera synliga.",
   "mute": "Stäng av ljud",

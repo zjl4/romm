@@ -13,6 +13,8 @@ const support = vi.hoisted(() => ({
   pico8Rom: vi.fn(() => false),
   easyRpg: vi.fn(() => false),
   easyRpgGame: vi.fn(() => false),
+  mkxpz: vi.fn(() => false),
+  mkxpzGame: vi.fn(() => false),
   ruffle: vi.fn(() => false),
   // js-dos also demands its own bundle format; on by default so the engine
   // stubs stay the only variable.
@@ -55,6 +57,8 @@ vi.mock("@/utils", () => ({
   isPico8Rom: support.pico8Rom,
   isEasyRpgEmulationSupported: support.easyRpg,
   isEasyRpgGame: support.easyRpgGame,
+  isMkxpzEmulationSupported: support.mkxpz,
+  isMkxpzGame: support.mkxpzGame,
   isRuffleEmulationSupported: support.ruffle,
   isJsDosBundle: support.jsDosBundle,
 }));
@@ -75,6 +79,8 @@ beforeEach(() => {
   support.pico8Rom.mockReturnValue(false);
   support.easyRpg.mockReturnValue(false);
   support.easyRpgGame.mockReturnValue(false);
+  support.mkxpz.mockReturnValue(false);
+  support.mkxpzGame.mockReturnValue(false);
   support.ruffle.mockReturnValue(false);
   support.jsDosBundle.mockReturnValue(true);
   streamContainer.value = null;
@@ -89,6 +95,7 @@ describe("useCanPlay", () => {
     ["js-dos", "jsDos", "canPlayJsDos", []],
     ["PICO-8", "pico8", "canPlayPico8", ["pico8Rom"]],
     ["EasyRPG", "easyRpg", "canPlayEasyRpg", ["easyRpgGame"]],
+    ["mkxp-z", "mkxpz", "canPlayMkxpz", ["mkxpzGame"]],
     ["Ruffle", "ruffle", "canPlayRuffle", []],
   ] as const)(
     "reports %s support on its own flag",
@@ -104,7 +111,7 @@ describe("useCanPlay", () => {
 
   // A physical game, or one whose file vanished from the library, has nothing
   // to hand the emulator: every route boots from the download endpoint.
-  it.each(["ejs", "jsDos", "pico8", "easyRpg", "ruffle"] as const)(
+  it.each(["ejs", "jsDos", "pico8", "easyRpg", "mkxpz", "ruffle"] as const)(
     "refuses %s for a rom with no file on disk",
     (stub) => {
       support[stub].mockReturnValue(true);
@@ -175,6 +182,7 @@ describe("useCanPlay", () => {
     ["js-dos", "jsDos", "canPlayJsDos", []],
     ["PICO-8", "pico8", "canPlayPico8", ["pico8Rom"]],
     ["EasyRPG", "easyRpg", "canPlayEasyRpg", ["easyRpgGame"]],
+    ["mkxp-z", "mkxpz", "canPlayMkxpz", ["mkxpzGame"]],
     ["Ruffle", "ruffle", "canPlayRuffle", []],
   ] as const)(
     "withholds %s without the in-browser play grant",
@@ -256,6 +264,15 @@ describe("useCanPlay", () => {
     const { canPlay, canPlayEasyRpg } = useCanPlay(() => playableRom());
 
     expect(canPlayEasyRpg.value).toBe(false);
+    expect(canPlay.value).toBe(false);
+  });
+
+  it("refuses mkxp-z for a rom with no engine marker", () => {
+    support.mkxpz.mockReturnValue(true);
+    support.mkxpzGame.mockReturnValue(false);
+    const { canPlay, canPlayMkxpz } = useCanPlay(() => playableRom());
+
+    expect(canPlayMkxpz.value).toBe(false);
     expect(canPlay.value).toBe(false);
   });
 

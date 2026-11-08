@@ -472,6 +472,7 @@ DISABLE_RUFFLE_RS: Final[bool] = safe_str_to_bool(_get_env("DISABLE_RUFFLE_RS"))
 DISABLE_JSDOS: Final[bool] = safe_str_to_bool(_get_env("DISABLE_JSDOS"))
 DISABLE_PICO8: Final[bool] = safe_str_to_bool(_get_env("DISABLE_PICO8"))
 DISABLE_EASYRPG: Final[bool] = safe_str_to_bool(_get_env("DISABLE_EASYRPG"))
+DISABLE_MKXPZ: Final[bool] = safe_str_to_bool(_get_env("DISABLE_MKXPZ"))
 
 # FRONTEND
 KIOSK_MODE: Final[bool] = safe_str_to_bool(_get_env("KIOSK_MODE"))

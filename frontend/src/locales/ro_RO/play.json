@@ -114,6 +114,8 @@
   "memory-card-versions": "Istoricul versiunilor",
   "memory-cards": "Carduri de memorie",
   "memory-cards-empty": "Nu ai încă niciun card de memorie pentru acest emulator.",
+  "mkxpz-saves-load-failed": "Salvările nu au putut fi încărcate din RomM.",
+  "mkxpz-screen": "Ecran de joc mkxp-z",
   "multiplayer": "Mod multiplayer",
   "multiplayer-hint": "Afișează un buton Alătură-te pe pagina acestui joc și păstrează vizibile chatul și camera web.",
   "mute": "Dezactivează sunetul",

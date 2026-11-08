@@ -41,6 +41,7 @@ class EmulationDict(TypedDict):
     DISABLE_JSDOS: bool
     DISABLE_PICO8: bool
     DISABLE_EASYRPG: bool
+    DISABLE_MKXPZ: bool
 
 
 class FrontendDict(TypedDict):

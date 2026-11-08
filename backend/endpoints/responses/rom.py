@@ -41,6 +41,7 @@ from models.collection import Collection, SmartCollection
 from models.rom import (
     PROVIDER_METADATA_COLUMNS,
     DocSource,
+    MkxpzEngine,
     Rom,
     RomArchiveMember,
     RomFile,
@@ -467,6 +468,7 @@ class RomSchema(BaseModel):
     has_nested_single_file: bool
     has_multiple_files: bool
     is_easyrpg_game: bool
+    mkxpz_engine: MkxpzEngine | None
     full_path: str
     created_at: UTCDatetime
     updated_at: UTCDatetime

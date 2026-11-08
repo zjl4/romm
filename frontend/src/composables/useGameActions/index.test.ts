@@ -23,6 +23,7 @@ const canPlayEJS = { value: true };
 const canPlayJsDos = { value: false };
 const canPlayPico8 = { value: false };
 const canPlayEasyRpg = { value: false };
+const canPlayMkxpz = { value: false };
 const canPlayRuffle = { value: false };
 const canPlayNative = { value: false };
 const streamContainer = { value: null as object | null };
@@ -117,6 +118,7 @@ vi.mock("@/composables/useCanPlay", () => ({
     canPlayJsDos,
     canPlayPico8,
     canPlayEasyRpg,
+    canPlayMkxpz,
     canPlayRuffle,
     canPlayNative,
     canReachStream: {
@@ -189,6 +191,7 @@ beforeEach(() => {
   canPlayJsDos.value = false;
   canPlayPico8.value = false;
   canPlayEasyRpg.value = false;
+  canPlayMkxpz.value = false;
   canPlayRuffle.value = false;
   canPlayNative.value = false;
   streamContainer.value = null;
@@ -453,6 +456,16 @@ describe("useGameActions.play — launch confirmation", () => {
     expect(push).toHaveBeenCalledWith("/rom/1/easyrpg");
   });
 
+  it("goes to mkxp-z for an RPG Maker XP, VX or VX Ace game", async () => {
+    canPlayEJS.value = false;
+    canPlayMkxpz.value = true;
+    const actions = useGameActions(() => romWithStatus());
+
+    await actions.play();
+
+    expect(push).toHaveBeenCalledWith("/rom/1/mkxpz");
+  });
+
   it("prefers js-dos over EmulatorJS for its platforms", async () => {
     canPlayJsDos.value = true;
     const actions = useGameActions(() => romWithStatus());
@@ -579,6 +592,10 @@ describe("useGameActions.playPath", () => {
     expect(actions.playPath("local")).toBe("/rom/1/easyrpg");
 
     canPlayEasyRpg.value = false;
+    canPlayMkxpz.value = true;
+    expect(actions.playPath("local")).toBe("/rom/1/mkxpz");
+
+    canPlayMkxpz.value = false;
     expect(actions.playPath("local")).toBe("/rom/1/ruffle");
   });
 

@@ -114,6 +114,8 @@
   "memory-card-versions": "버전 기록",
   "memory-cards": "메모리 카드",
   "memory-cards-empty": "이 에뮬레이터에 대한 메모리 카드가 아직 없습니다.",
+  "mkxpz-saves-load-failed": "RomM에서 세이브를 불러오지 못했습니다.",
+  "mkxpz-screen": "mkxp-z 게임 화면",
   "multiplayer": "멀티플레이어 모드",
   "multiplayer-hint": "이 게임 페이지에 참가 버튼을 표시하고 채팅과 웹캠을 계속 보이게 합니다.",
   "mute": "음소거",

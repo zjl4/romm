@@ -166,6 +166,7 @@ export type { MetadataSource } from './models/MetadataSource';
 export type { MetadataSourcesDict } from './models/MetadataSourcesDict';
 export type { MissingFirmwareCleanupStats } from './models/MissingFirmwareCleanupStats';
 export type { MissingRomsCleanupStats } from './models/MissingRomsCleanupStats';
+export type { MkxpzEngine } from './models/MkxpzEngine';
 export type { MobyMetadataPlatform } from './models/MobyMetadataPlatform';
 export type { MusicGameFacetSchema } from './models/MusicGameFacetSchema';
 export type { MusicPage_FacetValueSchema_ } from './models/MusicPage_FacetValueSchema_';

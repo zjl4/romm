@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ManualMetadata } from './ManualMetadata';
+import type { MkxpzEngine } from './MkxpzEngine';
 import type { RomCsdbMetadata } from './RomCsdbMetadata';
 import type { RomDemozooMetadata } from './RomDemozooMetadata';
 import type { RomFileSchema } from './RomFileSchema';
@@ -105,6 +106,7 @@ export type DetailedRomSchema = {
     has_nested_single_file: boolean;
     has_multiple_files: boolean;
     is_easyrpg_game: boolean;
+    mkxpz_engine: (MkxpzEngine | null);
     full_path: string;
     created_at: string;
     updated_at: string;

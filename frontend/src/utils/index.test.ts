@@ -8,6 +8,8 @@ import {
   isEasyRpgGame,
   isJsDosBundle,
   isJsDosEmulationSupported,
+  isMkxpzEmulationSupported,
+  isMkxpzGame,
   isPico8EmulationSupported,
   isPico8Rom,
 } from "./index";
@@ -23,6 +25,7 @@ function makeHeartbeat(
       DISABLE_JSDOS: false,
       DISABLE_PICO8: false,
       DISABLE_EASYRPG: false,
+      DISABLE_MKXPZ: false,
       ...emulation,
     },
   } as Heartbeat;
@@ -162,6 +165,28 @@ describe("EasyRPG support", () => {
     expect(isEasyRpgGame(romFixture({ is_easyrpg_game: true }))).toBe(true);
     expect(isEasyRpgGame(romFixture({ is_easyrpg_game: false }))).toBe(false);
     expect(isEasyRpgGame(null)).toBe(false);
+  });
+});
+
+describe("isMkxpzEmulationSupported", () => {
+  it("supports the rpg-maker platform", () => {
+    expect(isMkxpzEmulationSupported("rpg-maker", makeHeartbeat())).toBe(true);
+    expect(isMkxpzEmulationSupported("snes", makeHeartbeat())).toBe(false);
+  });
+
+  it("respects the DISABLE_MKXPZ admin toggle", () => {
+    expect(
+      isMkxpzEmulationSupported(
+        "rpg-maker",
+        makeHeartbeat({ DISABLE_MKXPZ: true }),
+      ),
+    ).toBe(false);
+  });
+
+  it("follows the backend's engine detection", () => {
+    expect(isMkxpzGame(romFixture({ mkxpz_engine: "vx-ace" }))).toBe(true);
+    expect(isMkxpzGame(romFixture({ mkxpz_engine: null }))).toBe(false);
+    expect(isMkxpzGame(null)).toBe(false);
   });
 });
 

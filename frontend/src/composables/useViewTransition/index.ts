@@ -35,6 +35,7 @@ const MORPH_ROM_ROUTES: ReadonlySet<string> = new Set([
   ROUTES.JSDOS,
   ROUTES.PICO8,
   ROUTES.EASYRPG,
+  ROUTES.MKXPZ,
   ROUTES.RUFFLE,
 ]);
 

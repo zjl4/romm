@@ -740,6 +740,37 @@ export function isEasyRpgGame(rom: SimpleRom | null | undefined) {
   return rom?.is_easyrpg_game === true;
 }
 
+/**
+ * Check if mkxp-z emulation is supported for a given platform.
+ *
+ * XP, VX and VX Ace games share the RPG Maker platform with 2000/2003 ones.
+ *
+ * @param platformSlug The platform slug.
+ * @param heartbeat The heartbeat object.
+ * @param config Optional configuration object.
+ * @returns True if supported, false otherwise.
+ */
+export function isMkxpzEmulationSupported(
+  platformSlug: string,
+  heartbeat: Heartbeat,
+  config?: Config,
+) {
+  if (heartbeat.EMULATION.DISABLE_MKXPZ) return false;
+
+  const slug = resolvePlatformSlug(platformSlug, config);
+  return slug.toLowerCase() === "rpg-maker";
+}
+
+/**
+ * Check if a ROM is an extracted RPG Maker XP, VX or VX Ace game folder.
+ *
+ * @param rom The ROM to check.
+ * @returns True if the ROM is a game folder, false otherwise.
+ */
+export function isMkxpzGame(rom: SimpleRom | null | undefined) {
+  return rom?.mkxpz_engine != null;
+}
+
 export type PlayingStatus =
   RomUserStatus | "backlogged" | "now_playing" | "hidden";
 

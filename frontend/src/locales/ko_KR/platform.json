@@ -72,6 +72,7 @@
   "playable-browser-easyrpg": "EasyRPG을 통해 브라우저에서 플레이 가능",
   "playable-browser-emulatorjs": "EmulatorJS를 통해 브라우저에서 플레이 가능",
   "playable-browser-jsdos": "js-dos를 통해 브라우저에서 플레이 가능",
+  "playable-browser-mkxpz": "mkxp-z을 통해 브라우저에서 플레이 가능",
   "playable-browser-pico8": "PICO-8을 통해 브라우저에서 플레이 가능",
   "playable-browser-ruffle": "Ruffle을 통해 브라우저에서 플레이 가능",
   "playable-none": "브라우저에서도 스트리밍으로도 플레이할 수 없음",

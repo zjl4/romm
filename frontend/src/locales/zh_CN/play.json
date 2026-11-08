@@ -114,6 +114,8 @@
   "memory-card-versions": "版本历史",
   "memory-cards": "记忆卡",
   "memory-cards-empty": "您还没有此模拟器的记忆卡。",
+  "mkxpz-saves-load-failed": "无法从 RomM 加载存档。",
+  "mkxpz-screen": "mkxp-z 游戏画面",
   "multiplayer": "多人模式",
   "multiplayer-hint": "在该游戏页面显示“加入”按钮，并保持聊天和摄像头可见。",
   "mute": "静音",

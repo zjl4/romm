@@ -114,6 +114,8 @@
   "memory-card-versions": "Sürüm geçmişi",
   "memory-cards": "Hafıza kartları",
   "memory-cards-empty": "Bu emülatör için henüz hiç hafıza kartınız yok.",
+  "mkxpz-saves-load-failed": "Kayıtlar RomM'dan yüklenemedi.",
+  "mkxpz-screen": "mkxp-z oyun ekranı",
   "multiplayer": "Çok oyunculu mod",
   "multiplayer-hint": "Bu oyunun sayfasında bir Katıl düğmesi gösterir, sohbeti ve web kamerasını görünür tutar.",
   "mute": "Sessize al",

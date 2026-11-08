@@ -183,6 +183,11 @@ const routes = [
         component: routeComponent(ROUTES.EASYRPG),
       },
       {
+        path: "rom/:rom/mkxpz",
+        name: ROUTES.MKXPZ,
+        component: routeComponent(ROUTES.MKXPZ),
+      },
+      {
         path: "rom/:rom/ruffle",
         name: ROUTES.RUFFLE,
         component: routeComponent(ROUTES.RUFFLE),

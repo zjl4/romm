@@ -67,6 +67,7 @@ export const PAGES: Record<RouteName, PageDef> = {
   [ROUTES.JSDOS]: { skip: "a player: needs a game it can run" },
   [ROUTES.PICO8]: { skip: "a player: needs a game it can run" },
   [ROUTES.EASYRPG]: { skip: "a player: needs a game it can run" },
+  [ROUTES.MKXPZ]: { skip: "a player: needs a game it can run" },
   [ROUTES.RUFFLE]: { skip: "a player: needs a game it can run" },
   [ROUTES.STREAM]: { skip: "needs a streaming host" },
   [ROUTES.STREAM_DESKTOP]: { skip: "needs a streaming host" },

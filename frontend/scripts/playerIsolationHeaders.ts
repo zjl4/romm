@@ -6,7 +6,7 @@ import type { Connect, Plugin } from "vite";
 // A copy of the `$coep_header`/`$coop_header` maps in
 // docker/nginx/templates/default.conf.template; the test fails when they drift.
 export const ISOLATED_PLAYER_URLS: readonly RegExp[] = [
-  /^\/rom\/.*\/(ejs|jsdos)(\?|$)/,
+  /^\/rom\/.*\/(ejs|jsdos|mkxpz)(\?|$)/,
 ];
 
 // nginx matches the request URI rather than the path, since try_files rewrites

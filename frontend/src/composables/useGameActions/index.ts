@@ -43,7 +43,8 @@ export interface GameActionsOptions {
 /** Which player a launch is asking for. "auto" lets availability decide. */
 export type PlayTarget = "auto" | "local" | "stream";
 
-type PlayerSlug = "stream" | "jsdos" | "ejs" | "pico8" | "easyrpg" | "ruffle";
+type PlayerSlug =
+  "stream" | "jsdos" | "ejs" | "pico8" | "easyrpg" | "mkxpz" | "ruffle";
 
 // A conversion can take a while on large discs; stop polling after about an hour.
 const FORMAT_POLL_SECONDS = 30;
@@ -94,6 +95,7 @@ export function useGameActions(
     canPlayJsDos,
     canPlayPico8,
     canPlayEasyRpg,
+    canPlayMkxpz,
     canPlayRuffle,
     canReachStream,
     canPlayStream,
@@ -109,6 +111,7 @@ export function useGameActions(
       canPlayJsDos.value ||
       canPlayPico8.value ||
       canPlayEasyRpg.value ||
+      canPlayMkxpz.value ||
       canPlayRuffle.value,
   );
 
@@ -393,6 +396,7 @@ export function useGameActions(
     else if (canPlayEJS.value) slug = "ejs";
     else if (canPlayPico8.value) slug = "pico8";
     else if (canPlayEasyRpg.value) slug = "easyrpg";
+    else if (canPlayMkxpz.value) slug = "mkxpz";
     else if (canPlayRuffle.value) slug = "ruffle";
     // Last, because the play page offers the native launch beside whichever
     // in-browser core the branches above would have picked.

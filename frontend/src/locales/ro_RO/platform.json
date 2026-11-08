@@ -72,6 +72,7 @@
   "playable-browser-easyrpg": "Se poate juca în browser prin EasyRPG",
   "playable-browser-emulatorjs": "Se poate juca în browser prin EmulatorJS",
   "playable-browser-jsdos": "Se poate juca în browser prin js-dos",
+  "playable-browser-mkxpz": "Se poate juca în browser prin mkxp-z",
   "playable-browser-pico8": "Se poate juca în browser prin PICO-8",
   "playable-browser-ruffle": "Se poate juca în browser prin Ruffle",
   "playable-none": "Nu se poate juca în browser și nici prin streaming",

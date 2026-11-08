@@ -18,6 +18,7 @@ FILE_STAT_FIELDS = (
     "has_multiple_files",
     "has_soundtrack",
     "is_easyrpg_game",
+    "mkxpz_engine",
 )
 
 
@@ -101,6 +102,34 @@ def easyrpg_rom(admin_user: User, platform: Platform) -> Rom:
     return rom
 
 
+@pytest.fixture
+def mkxpz_rom(admin_user: User, platform: Platform) -> Rom:
+    """An unencrypted RPG Maker VX Ace game folder, its scripts under Data/."""
+    rom = _add_rom(admin_user, platform, "vxace_game", fs_extension="")
+    file_path = f"{rom.fs_path}/vxace_game"
+    _add_file(rom, "Game.ini", file_path=file_path)
+    _add_file(rom, "Scripts.rvdata2", file_path=f"{file_path}/Data")
+    return rom
+
+
+@pytest.fixture
+def mkxpz_archive_rom(admin_user: User, platform: Platform) -> Rom:
+    """An encrypted RPG Maker XP game folder, one archive at its root."""
+    rom = _add_rom(admin_user, platform, "xp_game", fs_extension="")
+    file_path = f"{rom.fs_path}/xp_game"
+    _add_file(rom, "Game.ini", file_path=file_path)
+    _add_file(rom, "Game.RGSSAD", file_path=file_path)
+    return rom
+
+
+@pytest.fixture
+def nested_scripts_rom(admin_user: User, platform: Platform) -> Rom:
+    """A folder whose scripts sit too deep to be a game's own Data/."""
+    rom = _add_rom(admin_user, platform, "backup", fs_extension="")
+    _add_file(rom, "Scripts.rxdata", file_path=f"{rom.fs_path}/backup/old/Data")
+    return rom
+
+
 def _fetch_one(
     client: TestClient, access_token: str, platform: Platform, *, with_files: bool
 ) -> dict[str, Any]:
@@ -124,6 +153,9 @@ def _fetch_one(
         "soundtrack_rom",
         "fileless_rom",
         "easyrpg_rom",
+        "mkxpz_rom",
+        "mkxpz_archive_rom",
+        "nested_scripts_rom",
     ],
 )
 def test_file_stats_match_between_derived_and_sql_paths(
@@ -165,6 +197,33 @@ def test_is_easyrpg_game_needs_a_top_level_game_database(
     rom = _fetch_one(client, access_token, platform, with_files=with_files)
 
     assert rom["is_easyrpg_game"] is expected
+
+
+@pytest.mark.parametrize("with_files", [True, False])
+@pytest.mark.parametrize(
+    ("rom_fixture", "expected"),
+    [
+        ("mkxpz_rom", "vx-ace"),
+        ("mkxpz_archive_rom", "xp"),
+        ("nested_scripts_rom", None),
+        ("easyrpg_rom", None),
+        ("folder_rom", None),
+    ],
+)
+def test_mkxpz_engine_reads_the_root_archive_or_data_scripts(
+    client: TestClient,
+    access_token: str,
+    platform: Platform,
+    rom_fixture: str,
+    expected: str | None,
+    with_files: bool,
+    request: pytest.FixtureRequest,
+) -> None:
+    request.getfixturevalue(rom_fixture)
+
+    rom = _fetch_one(client, access_token, platform, with_files=with_files)
+
+    assert rom["mkxpz_engine"] == expected
 
 
 def test_with_files_query_count_does_not_scale_with_file_count(
