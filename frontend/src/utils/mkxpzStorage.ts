@@ -121,11 +121,21 @@ export async function mkxpzGameFile(
  * Download `url` into the games folder as `gameFile`, unless it is already there.
  *
  * Older archives of the same ROM are removed, since their files have changed.
+ *
+ * Args:
+ *   romId: The ROM the archive belongs to.
+ *   gameFile: The archive name, from `mkxpzGameFile`.
+ *   url: Where the archive downloads from.
+ *   expectedBytes: The size to report progress against when the response
+ *     gives none; the archive streams without a Content-Length.
+ *   onProgress: Called with the bytes received so far and the total.
  */
 export async function cacheMkxpzGame(
   romId: number,
   gameFile: string,
   url: string,
+  expectedBytes = 0,
+  onProgress?: (received: number, total: number) => void,
 ): Promise<void> {
   const games = await directoryAt([ROOT, GAMES], true);
   const marker = `${gameFile}${COMPLETE_SUFFIX}`;
@@ -135,8 +145,20 @@ export async function cacheMkxpzGame(
     if (!response.ok || !response.body) {
       throw new Error(`Game download failed: ${response.status}`);
     }
+    const total =
+      Number(response.headers.get("Content-Length")) || expectedBytes;
+    let received = 0;
+    const counted = response.body.pipeThrough(
+      new TransformStream<Uint8Array, Uint8Array>({
+        transform(chunk, controller) {
+          received += chunk.byteLength;
+          onProgress?.(received, total);
+          controller.enqueue(chunk);
+        },
+      }),
+    );
     const handle = await games.getFileHandle(gameFile, { create: true });
-    await response.body.pipeTo(await handle.createWritable());
+    await counted.pipeTo(await handle.createWritable());
     await games.getFileHandle(marker, { create: true });
   }
 

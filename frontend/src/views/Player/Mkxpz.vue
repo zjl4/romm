@@ -64,6 +64,8 @@ const rom = shallowRef<DetailedRom | null>(null);
 const gameRunning = ref(false);
 usePlayingWhile(gameRunning);
 const preparing = ref(false);
+// Set only while the game downloads; a cached game starts without one.
+const downloadPercent = ref<number | null>(null);
 const quitting = ref(false);
 const stage = ref<HTMLDivElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
@@ -161,6 +163,13 @@ async function onPlay() {
       currentRom.id,
       gameFile,
       getDownloadPath({ rom: currentRom, purpose: "play" }),
+      currentRom.files.reduce((sum, file) => sum + file.file_size_bytes, 0),
+      (received, total) => {
+        // The zip's headers push past the files' own sizes, so 100 waits for the end.
+        downloadPercent.value = total
+          ? Math.min(99, Math.floor((received / total) * 100))
+          : null;
+      },
     );
   } catch (error) {
     console.error("[mkxp-z] Game download failed", error);
@@ -168,6 +177,7 @@ async function onPlay() {
     return;
   } finally {
     preparing.value = false;
+    downloadPercent.value = null;
   }
   if (!alive.value) return;
 
@@ -301,6 +311,13 @@ onBeforeUnmount(teardown);
   >
     <template #settings>
       <RSwitch v-model="fullscreenOnPlay" :label="t('play.full-screen')" />
+      <p
+        v-if="downloadPercent !== null"
+        class="r-mkxpz__progress"
+        role="status"
+      >
+        {{ t("play.native-downloading", { percent: downloadPercent }) }}
+      </p>
     </template>
 
     <template #brand>
@@ -323,6 +340,13 @@ onBeforeUnmount(teardown);
 </template>
 
 <style scoped>
+.r-mkxpz__progress {
+  margin: 0;
+  font-size: var(--r-font-size-sm);
+  color: var(--r-color-fg-secondary);
+  text-align: center;
+}
+
 .r-mkxpz__brand {
   display: flex;
   align-items: center;
