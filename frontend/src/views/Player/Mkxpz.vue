@@ -104,6 +104,15 @@ async function restoreSaves(saves: LocalSave[]) {
   );
 }
 
+// RetroArch would otherwise file saves and states under a folder named after
+// the core, one level below where `readMkxpzSaves` looks.
+const UNSORTED_SAVES: Record<string, boolean> = {
+  sort_savefiles_enable: false,
+  sort_savestates_enable: false,
+  sort_savefiles_by_content_enable: false,
+  sort_savestates_by_content_enable: false,
+};
+
 // XP games read Z and C where VX and VX Ace read Z and Shift.
 function inputConfig(xp: boolean) {
   return {
@@ -195,6 +204,7 @@ async function onPlay() {
         savefile_directory: paths.saveDirectory,
         savestate_directory: paths.stateDirectory,
         system_directory: paths.systemDirectory,
+        ...UNSORTED_SAVES,
         ...inputConfig(currentRom.mkxpz_engine === "xp"),
       },
       retroarchCoreConfig: {
