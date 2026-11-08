@@ -179,7 +179,12 @@ async function onPlay() {
     gameRunning.value = false;
     return;
   }
-  if (fullscreenOnPlay.value) void enterFullscreen();
+  // The core sizes its canvas while it starts, so the stage settles first.
+  if (fullscreenOnPlay.value) {
+    await enterFullscreen();
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    if (!alive.value || !canvas.value) return;
+  }
 
   const paths = mkxpzPaths(profile.value, gameFile);
   try {
